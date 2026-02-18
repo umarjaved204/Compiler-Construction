@@ -1,0 +1,102 @@
+## Test 2: Complex Expressions
+
+start
+    ## Complex arithmetic expressions
+    declare Result = ((10 + 5) * 3 - 8) / 2 ** 2
+    declare Complex_calc = +123 + -456 * 789 % 100
+    
+    ## Nested conditions
+    condition X > 0 && Y > 0
+        condition X == Y || X > Y
+            output "Complex condition met"
+        else
+            condition !(X < Y)
+                output "Negated nested condition"
+            finish
+        finish
+    finish
+    
+    ## Chained comparisons
+    declare Valid = A >= B && B >= C && C >= D
+    
+    ## Multiple function calls
+    function Factorial[N]
+        condition N <= 1
+            return 1
+        finish
+        return N * Factorial[N - 1]
+    finish
+    
+    function Fibonacci[N]
+        condition N <= 1
+            return N
+        finish
+        return Fibonacci[N-1] + Fibonacci[N-2]
+    finish
+    
+    function Power[Base, Exp]
+        declare Temp = 1
+        loop Exp > 0
+            Temp *= Base
+            Exp--
+        finish
+        return Temp
+    finish
+    
+    ## Complex loop with multiple conditions
+    declare I = 0
+    declare J = 0
+    loop I < 10
+        J = 0
+        loop J < 10
+            condition I == J
+                continue
+            finish
+            
+            condition I + J >= 15
+                break
+            finish
+            
+            output I * J
+            J++
+        finish
+        I++
+    finish
+    
+    ## Mixed operators
+    declare Value = (A++ + B--) * (C += D) / (E -= F)
+    
+    ## Array operations
+    declare Matrix[10]
+    declare K = 0
+    loop K < 10
+        Matrix[K] = K ** 2
+        K++
+    finish
+    
+    ## String concatenation simulation
+    declare First_name = "John"
+    declare Last_name = "Doe"
+    
+    ## Boolean expressions
+    declare Is_valid = true && !false || (X > Y)
+    declare Check = (A < B) && (C <= D) || (E != F) && !(G == H)
+    
+    ## Multiple assignment operators
+    X += Y += Z
+    A *= B /= C
+    
+    ## Complex floating point
+    declare Scientific_1 = +1.234567e+10  ## Error: too many decimals
+    declare Scientific_2 = -9.87654E-5
+    declare Normal_float = +123.456
+    
+finish
+
+#* Multi-line comment with special characters
+   @#$%^&*()
+   Testing /* nested comment style */
+   More content
+*#
+
+## Another single line comment

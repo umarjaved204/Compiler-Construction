@@ -1,0 +1,39 @@
+# Compiled Java files
+*.class
+
+# JFlex backup files
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build outputs
+bin/
+build/
+out/
+
+# Test outputs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Package Files (but keep JFlex jar)
+*.jar
+!jflex-1.9.1/lib/jflex-full-*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar

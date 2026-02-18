@@ -1,0 +1,126 @@
+## Test 1: All Valid Tokens
+## This file tests all valid token types
+
+start
+    declare Count = 0
+    declare Total_sum_2024 = +100
+    declare Pi = 3.14159
+    declare Flag = true
+    declare Name = "Hello World"
+    declare Letter = 'A'
+    
+    ## Arithmetic operators
+    Count = Count + 1
+    Total_sum_2024 = Total_sum_2024 - 50
+    Count = Count * 2
+    Total_sum_2024 = Total_sum_2024 / 10
+    Count = Count % 3
+    Count = 2 ** 8
+    
+    ## Relational operators
+    condition Count == 10
+        output "Equal"
+    else
+        output "Not equal"
+    finish
+    
+    condition Count != 5
+        output "Not equal"
+    finish
+    
+    condition Count < 100
+        output "Less than"
+    finish
+    
+    condition Count > 0
+        output "Greater than"
+    finish
+    
+    condition Count <= 50
+        output "Less or equal"
+    finish
+    
+    condition Count >= 10
+        output "Greater or equal"
+    finish
+    
+    ## Logical operators
+    condition Flag && true
+        output "Both true"
+    finish
+    
+    condition Flag || false
+        output "At least one true"
+    finish
+    
+    condition !Flag
+        output "Negated"
+    finish
+    
+    ## Assignment operators
+    Count += 5
+    Count -= 3
+    Count *= 2
+    Count /= 4
+    
+    ## Increment/Decrement
+    Count++
+    Count--
+    ++Count
+    --Count
+    
+    ## Loop
+    loop Count < 10
+        output Count
+        Count++
+    finish
+    
+    ## Function
+    function Calculate[X, Y, Z]
+        declare Result = X + Y * Z
+        return Result
+    finish
+    
+    ## Array access
+    declare Array[10]
+    Array[0] = 42
+    
+    ## Break and continue
+    loop Count < 100
+        condition Count == 50
+            break
+        finish
+        
+        condition Count % 2 == 0
+            continue
+        finish
+        
+        Count++
+    finish
+    
+    ## Input/Output
+    input Count
+    output Count
+    
+    ## Floating point with exponent
+    declare Scientific = 1.5e10
+    declare Negative_exp = 2.0E-3
+    
+    ## String with escape sequences
+    declare Message = "Line 1\nLine 2\tTabbed"
+    declare Quote = "He said \"Hello\""
+    declare Path = "C:\\Program Files\\App"
+    
+    ## Character with escape sequences
+    declare Newline = '\n'
+    declare Tab = '\t'
+    declare Backslash = '\\'
+    declare SingleQuote = '\''
+    
+finish
+
+#* 
+   Multi-line comment
+   spanning multiple lines
+   with various content
+*#

@@ -1,0 +1,394 @@
+================================================================================
+                    CUSTOMLANG LANGUAGE GRAMMAR SPECIFICATION
+================================================================================
+
+Language: CustomLang
+File Extension: .lang
+Assignment: CS4031 Compiler Construction - Assignment 01
+Date: February 18, 2026
+
+================================================================================
+                           LEXICAL SPECIFICATIONS
+================================================================================
+
+1. KEYWORDS (Case-Sensitive)
+----------------------------
+Regex: (start|finish|loop|condition|declare|output|input|function|return|break|continue|else)
+
+Keywords List:
+  - start      : Program/block start marker
+  - finish     : Program/block end marker
+  - loop       : Loop construct
+  - condition  : Conditional statement (if)
+  - else       : Alternative branch
+  - declare    : Variable declaration
+  - output     : Output statement
+  - input      : Input statement
+  - function   : Function definition
+  - return     : Return statement
+  - break      : Break from loop
+  - continue   : Continue to next iteration
+
+2. IDENTIFIERS
+--------------
+Regex: [A-Z][a-z0-9_]{0,30}
+
+Rules:
+  - Must start with uppercase letter (A-Z)
+  - Followed by lowercase letters (a-z), digits (0-9), or underscores (_)
+  - Maximum length: 31 characters
+  - Case-sensitive
+
+Valid Examples:
+  Count, Variable_name, X, Total_sum_2024, Result123
+
+Invalid Examples:
+  count (starts with lowercase)
+  Variable (uppercase after first char)
+  2Count (starts with digit)
+
+3. INTEGER LITERALS
+-------------------
+Regex: [+-]?[0-9]+
+
+Format: Optional sign (+/-) followed by one or more digits
+
+Examples:
+  42, +100, -567, 0, 123456789
+
+4. FLOATING-POINT LITERALS
+---------------------------
+Regex: [+-]?[0-9]+\.[0-9]{1,6}([eE][+-]?[0-9]+)?
+
+Format: 
+  - Optional sign
+  - One or more digits
+  - Decimal point
+  - 1 to 6 decimal digits (mandatory)
+  - Optional exponent (e or E) with optional sign and digits
+
+Examples:
+  3.14, +2.5, -0.123456, 1.5e10, 2.0E-3, -9.87654E-5
+
+Invalid:
+  3. (no decimal digits)
+  .14 (no digits before decimal)
+  1.2345678 (more than 6 decimal digits)
+
+5. STRING LITERALS
+------------------
+Regex: "([ ^"\\\n]|\\["\\ntr])*"
+
+Format:
+  - Enclosed in double quotes
+  - Cannot span multiple lines
+  - Supports escape sequences
+
+Escape Sequences:
+  \" - Double quote
+  \\ - Backslash
+  \n - Newline
+  \t - Tab
+  \r - Carriage return
+
+Examples:
+  "Hello, World!"
+  "Line 1\nLine 2"
+  "Path: C:\\Users\\Documents"
+  "She said \"Hello\""
+
+6. CHARACTER LITERALS
+----------------------
+Regex: '([ ^'\\\n]|\\['\\ntr])'
+
+Format:
+  - Single character enclosed in single quotes
+  - Supports escape sequences
+
+Examples:
+  'A', 'z', '0', ' ', '\n', '\t', '\'', '\\'
+
+7. BOOLEAN LITERALS
+-------------------
+Regex: (true|false)
+
+Values: true, false (case-sensitive)
+
+8. OPERATORS
+------------
+
+8.1 Arithmetic Operators
+Regex: (\*\*|[+\-*/%])
+Operators: +, -, *, /, %, ** (exponentiation)
+
+8.2 Relational Operators
+Regex: (==|!=|<=|>=|<|>)
+Operators: ==, !=, <, >, <=, >=
+
+8.3 Logical Operators
+Regex: (&&|\|\||!)
+Operators: &&, ||, !
+
+8.4 Assignment Operators
+Regex: (\+=|-=|\*=|/=|=)
+Operators: =, +=, -=, *=, /=
+
+8.5 Increment/Decrement Operators
+Regex: (\+\+|--)
+Operators: ++, --
+
+9. PUNCTUATORS
+--------------
+Regex: [(){}[\],;:]
+
+Symbols: ( ) { } [ ] , ; :
+
+Usage:
+  ( ) - Function calls, expression grouping
+  { } - Reserved for future use
+  [ ] - Array indexing, function parameters
+  ,   - Separator
+  ;   - Statement terminator (optional)
+  :   - Reserved for future use
+
+10. COMMENTS
+------------
+
+10.1 Single-Line Comments
+Regex: ##[ ^\n]*
+Format: ## followed by any characters until end of line
+
+Example:
+  ## This is a comment
+
+10.2 Multi-Line Comments
+Regex: #\*([ ^*]|\*+[ ^*#])*\*+#
+Format: Starts with #* and ends with *#
+
+Example:
+  #*
+     This is a multi-line comment
+     spanning multiple lines
+  *#
+
+11. WHITESPACE
+--------------
+Regex: [ \t\r\n]+
+
+Characters: space, tab, carriage return, newline
+Action: Skip (but track line numbers for error reporting)
+
+================================================================================
+                         PATTERN MATCHING PRIORITY
+================================================================================
+
+CRITICAL: Patterns must be checked in this order to avoid ambiguity:
+
+1.  Multi-line comments (#* ... *#)
+2.  Single-line comments (##)
+3.  Multi-character operators (**, ==, !=, <=, >=, &&, ||, ++, --, +=, -=, *=, /=)
+4.  Keywords (start, finish, etc.)
+5.  Boolean literals (true, false)
+6.  Identifiers ([A-Z][a-z0-9_]*)
+7.  Floating-point literals ([+-]?[0-9]+\.[0-9]{1,6}...)
+8.  Integer literals ([+-]?[0-9]+)
+9.  String/character literals
+10. Single-character operators (+, -, *, /, %, =, <, >, !)
+11. Punctuators
+12. Whitespace
+
+================================================================================
+                              SYNTAX RULES
+================================================================================
+
+Program Structure:
+------------------
+program ::= 'start' statement_list 'finish'
+
+statement_list ::= statement*
+
+statement ::= declaration
+            | assignment
+            | input_stmt
+            | output_stmt
+            | condition_stmt
+            | loop_stmt
+            | function_def
+            | function_call
+            | return_stmt
+            | break_stmt
+            | continue_stmt
+
+Declaration:
+-----------
+declaration ::= 'declare' IDENTIFIER '=' expression
+              | 'declare' IDENTIFIER '[' INTEGER ']'
+
+Assignment:
+----------
+assignment ::= IDENTIFIER '=' expression
+             | IDENTIFIER '+=' expression
+             | IDENTIFIER '-=' expression
+             | IDENTIFIER '*=' expression
+             | IDENTIFIER '/=' expression
+             | IDENTIFIER '++'
+             | IDENTIFIER '--'
+
+Input/Output:
+------------
+input_stmt ::= 'input' IDENTIFIER
+output_stmt ::= 'output' expression
+
+Conditional:
+-----------
+condition_stmt ::= 'condition' expression statement_list 'finish'
+                 | 'condition' expression statement_list 'else' statement_list 'finish'
+
+Loop:
+----
+loop_stmt ::= 'loop' expression statement_list 'finish'
+
+Function:
+--------
+function_def ::= 'function' IDENTIFIER '[' parameter_list ']' statement_list 'finish'
+function_call ::= IDENTIFIER '[' argument_list ']'
+parameter_list ::= IDENTIFIER (',' IDENTIFIER)*
+argument_list ::= expression (',' expression)*
+
+Control Flow:
+------------
+return_stmt ::= 'return' expression
+break_stmt ::= 'break'
+continue_stmt ::= 'continue'
+
+Expressions:
+-----------
+expression ::= logical_or
+
+logical_or ::= logical_and ('||' logical_and)*
+
+logical_and ::= equality ('&&' equality)*
+
+equality ::= relational (('==' | '!=') relational)*
+
+relational ::= additive (('<' | '>' | '<=' | '>=') additive)*
+
+additive ::= multiplicative (('+' | '-') multiplicative)*
+
+multiplicative ::= exponentiation (('*' | '/' | '%') exponentiation)*
+
+exponentiation ::= unary ('**' unary)*
+
+unary ::= ('!' | '-' | '+') unary
+        | postfix
+
+postfix ::= primary ('++' | '--')*
+
+primary ::= IDENTIFIER
+          | INTEGER
+          | FLOAT
+          | STRING
+          | CHAR
+          | BOOLEAN
+          | function_call
+          | array_access
+          | '(' expression ')'
+
+array_access ::= IDENTIFIER '[' expression ']'
+
+================================================================================
+                           ERROR HANDLING
+================================================================================
+
+Error Types:
+-----------
+1. INVALID_CHARACTER
+   - Characters not recognized by the language
+   - Examples: @, $, `, ~, etc.
+
+2. MALFORMED_LITERAL
+   - Floating-point with wrong decimal count
+   - Numbers with multiple decimal points
+   - Invalid exponent format
+
+3. INVALID_IDENTIFIER
+   - Starting with lowercase letter or digit
+   - Exceeding 31 character limit
+   - Using reserved keywords as identifiers
+
+4. UNCLOSED_COMMENT
+   - Multi-line comment without closing *#
+
+5. UNTERMINATED_STRING
+   - String literal without closing quote
+   - String spanning multiple lines
+
+6. UNTERMINATED_CHAR
+   - Character literal without closing quote
+   - Empty or multi-character char literal
+
+Error Recovery:
+--------------
+When an error is encountered:
+1. Report the error with line, column, and reason
+2. Skip the invalid token
+3. Continue scanning from the next valid token
+4. Accumulate all errors for final report
+
+================================================================================
+                              EXAMPLES
+================================================================================
+
+Example 1: Variable Declaration and Arithmetic
+-----------------------------------------------
+start
+    declare X = 10
+    declare Y = 20
+    declare Sum = X + Y
+    output Sum
+finish
+
+Example 2: Conditional Statement
+---------------------------------
+start
+    declare Age = 18
+    condition Age >= 18
+        output "Adult"
+    else
+        output "Minor"
+    finish
+finish
+
+Example 3: Loop
+---------------
+start
+    declare I = 0
+    loop I < 10
+        output I
+        I++
+    finish
+finish
+
+Example 4: Function
+-------------------
+start
+    function Add[A, B]
+        return A + B
+    finish
+    
+    declare Result = Add[5, 3]
+    output Result
+finish
+
+Example 5: Complex Expression
+------------------------------
+start
+    declare X = 10
+    declare Y = 5
+    declare Result = (X + Y) * 2 - X / Y ** 2
+    output Result
+finish
+
+================================================================================
+                           END OF GRAMMAR
+================================================================================

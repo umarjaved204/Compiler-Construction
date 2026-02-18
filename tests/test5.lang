@@ -1,0 +1,123 @@
+## Test 5: Comments Testing
+
+## This is a single-line comment
+## Another single-line comment
+
+start
+    ## Comment before declaration
+    declare X = 10  ## Comment after code
+    
+    ## Multiple single-line comments
+    ## Line 1
+    ## Line 2
+    ## Line 3
+    
+    #* Simple multi-line comment *#
+    
+    #*
+       Multi-line comment
+       spanning multiple lines
+    *#
+    
+    #*
+       This is a longer multi-line comment
+       that contains multiple lines
+       and demonstrates the scanner's ability
+       to handle multi-line comments properly
+    *#
+    
+    declare Y = 20
+    
+    #* Comment with special characters: @#$%^&*() *#
+    
+    #* Comment with code-like content:
+       declare Fake = 100
+       output "This should not be tokenized"
+       loop X < 10
+           X++
+       finish
+    *#
+    
+    ## Comment with "strings" and 'chars' inside
+    ## declare Another_fake = 999
+    
+    #* 
+       Multi-line comment with asterisks in content:
+       ***** Header *****
+       * Bullet point 1
+       * Bullet point 2
+       ******************
+    *#
+    
+    declare Z = 30
+    
+    #*
+    Multi-line comment without leading spaces
+    Second line
+    Third line
+    *#
+    
+    ## Empty comment: ##
+    ##
+    
+    #* Single line multi-line comment *#  declare Not_a_var = 1
+    
+    condition X > 0  ## Condition check
+        output "Positive"  ## Output message
+    else  ## Else clause
+        output "Not positive"  ## Alternative output
+    finish  ## End condition
+    
+    ## Comment at different indentation levels
+        ## Indented comment level 1
+            ## Indented comment level 2
+                ## Indented comment level 3
+    
+    loop X < 100  ## Loop comment
+        X++  ## Increment comment
+        
+        #* Comment inside loop *#
+        
+        condition X % 10 == 0  ## Divisibility check
+            output X  ## Print value
+        finish
+    finish  ## End loop
+    
+    #*
+       Nested comment style (not actually nested, but looks like it):
+       #* This is not a real nested comment *#
+       The above is just text, not a comment marker
+    *#
+    
+    function Calculate[A, B]  ## Function definition
+        #* Function body comment *#
+        return A + B  ## Return sum
+    finish  ## End function
+    
+    ## Multiple comments in sequence
+    #* First multi-line *#
+    ## Single line
+    #* Second multi-line *#
+    ## Another single line
+    #* Third multi-line *#
+    
+    ## Comment with escape-like sequences: \n \t \r \" \'
+    
+    #*
+       Testing comment with numbers: 123 456 789
+       And operators: + - * / % ** == != < > <= >=
+       And keywords: start finish loop condition
+    *#
+    
+    ## Final comment before finish
+    
+finish
+
+## Comment after program end
+
+#*
+   Multi-line comment after program end
+   This should still be recognized
+*#
+
+## The very last comment

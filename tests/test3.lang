@@ -1,0 +1,92 @@
+## Test 3: Strings and Characters with Escape Sequences
+
+start
+    ## Basic strings
+    declare Simple = "Hello, World!"
+    declare Empty = ""
+    declare Spaces = "   multiple   spaces   "
+    
+    ## Strings with escape sequences
+    declare Newline_str = "First line\nSecond line\nThird line"
+    declare Tab_str = "Col1\tCol2\tCol3"
+    declare Return_str = "Line with\rcarriage return"
+    declare Quote_str = "She said, \"Hello!\""
+    declare Backslash_str = "Path: C:\\Users\\Documents\\"
+    declare Mixed_esc = "Line1\n\tIndented\n\"Quoted\"\n\\Backslash\\"
+    
+    ## Complex escape sequences
+    declare Path_windows = "C:\\Program Files\\MyApp\\bin\\app.exe"
+    declare Json_like = "{\"name\": \"John\", \"age\": 30}"
+    declare Regex_like = "\\d+\\.\\d+"
+    
+    ## Characters
+    declare Char_a = 'A'
+    declare Char_z = 'z'
+    declare Char_0 = '0'
+    declare Char_space = ' '
+    
+    ## Characters with escape sequences
+    declare Char_newline = '\n'
+    declare Char_tab = '\t'
+    declare Char_return = '\r'
+    declare Char_quote = '\''
+    declare Char_backslash = '\\'
+    
+    ## Multi-line string-like content (actually separate strings)
+    output "This is line 1"
+    output "This is line 2"
+    output "This is line 3"
+    
+    ## String in conditions
+    condition Name == "John"
+        output "Hello John"
+    finish
+    
+    ## String in function
+    function Print_message[Msg]
+        output Msg
+        output "\n"
+    finish
+    
+    ## Array of strings (simulated)
+    declare Messages[5]
+    Messages[0] = "First"
+    Messages[1] = "Second"
+    Messages[2] = "Third"
+    Messages[3] = "Fourth"
+    Messages[4] = "Fifth"
+    
+    ## Loop with strings
+    declare Counter = 0
+    loop Counter < 5
+        output Messages[Counter]
+        output "\n"
+        Counter++
+    finish
+    
+    ## Complex string assignments
+    declare Long_string = "This is a very long string that contains multiple words and demonstrates the scanner's ability to handle longer lexemes without any issues whatsoever"
+    
+    ## Strings with special patterns
+    declare Numbers_in_str = "123 456 789"
+    declare Mixed_case = "ThIs Is MiXeD cAsE"
+    declare Punctuation = "Hello, world! How are you? I'm fine."
+    declare Math_expr = "2 + 2 = 4"
+    
+    ## Adjacent strings
+    output "Hello"
+    output "World"
+    
+    ## String with all escape sequences
+    declare All_escapes = "\"\\\n\t\r"
+    
+finish
+
+#* 
+   Testing strings in comments:
+   "This is a string in a comment"
+   'This is a char in a comment'
+   These should not be tokenized
+*#
+
+## Single line with "string" and 'char' in comment

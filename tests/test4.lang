@@ -1,0 +1,61 @@
+## Test 4: Lexical Errors
+
+start
+    ## Valid declaration
+    declare Valid_id = 42
+    
+    ## Error: Invalid characters
+    declare Value@ = 10  ## @ is invalid
+    declare Price$ = 99  ## $ is invalid
+    declare Count# = 5   ## # starts a comment, but after identifier is invalid usage
+    
+    ## Error: Invalid identifiers (starting with lowercase)
+    declare invalid = 100  ## Should start with uppercase
+    declare myVariable = 50  ## Should start with uppercase
+    
+    ## Error: Invalid identifiers (starting with digit)
+    declare 2Count = 20  ## Cannot start with digit
+    declare 99Bottles = 99  ## Cannot start with digit
+    
+    ## Error: Identifier too long (more than 31 characters)
+    declare This_is_a_very_long_identifier_name_that_exceeds_limit = 1
+    
+    ## Error: Malformed floating-point literals
+    declare Bad_float_1 = 3.  ## No digits after decimal
+    declare Bad_float_2 = .14  ## No digits before decimal
+    declare Bad_float_3 = 1.2345678  ## More than 6 decimal digits
+    declare Bad_float_4 = 12.3456789012  ## Way too many decimal digits
+    
+    ## Error: Invalid float exponent
+    declare Bad_exp_1 = 1.5e  ## Missing exponent digits
+    declare Bad_exp_2 = 1.5E  ## Missing exponent digits
+    
+    ## Error: Unterminated string literals
+    declare Unterm_1 = "This string never ends
+    declare Unterm_2 = "Another unterminated string
+    output "Missing closing quote
+    
+    ## Error: Unterminated character literals
+    declare Unterm_char_1 = 'A
+    declare Unterm_char_2 = '
+    declare Unterm_char_3 = '\n
+    
+    ## Error: Invalid escape sequences
+    declare Bad_escape_1 = "Invalid \x escape"
+    declare Bad_escape_2 = "Another \z bad"
+    declare Bad_char_esc = '\x'
+    
+    ## Error: Empty character literal
+    declare Empty_char = ''  ## No character between quotes
+    
+    ## Error: Multiple characters in char literal
+    declare Multi_char = 'AB'  ## Only one char allowed
+    
+    ## Valid tokens after errors
+    declare Recovery = 999
+    output "Testing error recovery"
+    
+    ## Error: Unclosed multi-line comment at end of file
+    #* This comment is never closed
+       It goes on and on
+       but never finds its ending
