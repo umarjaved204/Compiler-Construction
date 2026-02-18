@@ -99,8 +99,8 @@ IDENTIFIER      = {UPPER}[a-z0-9_]{0,30}
 /* Literals */
 INTEGER         = [+-]?{DIGIT}+
 FLOAT           = [+-]?{DIGIT}+\.{DIGIT}{1,6}([eE][+-]?{DIGIT}+)?
-STRING          = \"([^\"\\\n]|\\[\"\\\ntr])*\"
-CHAR            = '([^'\\\n]|\\['\\\ntr])'
+STRING          = \"([^\"\\\n]|(\\(\"|\\|n|t|r)))*\"
+CHAR            = '([^'\\\n]|(\\('|\\|n|t|r)))'
 
 /* Operators - Simple character class only */
 ARITH_OP        = [%]
@@ -116,8 +116,8 @@ MULTI_COMMENT   = #\*([^*]|\*+[^*#])*\*+#
 /* Error patterns */
 INVALID_FLOAT   = [+-]?{DIGIT}+\.{DIGIT}{DIGIT}{DIGIT}{DIGIT}{DIGIT}{DIGIT}{DIGIT}{DIGIT}+([eE][+-]?{DIGIT}+)?
 INVALID_ID      = {UPPER}[a-z0-9_]{31}[a-z0-9_]+
-UNTERM_STRING   = \"([^\"\\\n]|\\[\"\\\ntr])*
-UNTERM_CHAR     = \'([^\'\\\n]|\\[\'\\\ntr])
+UNTERM_STRING   = \"([^\"\\\n]|(\\(\"|\\|n|t|r)))*
+UNTERM_CHAR     = \'([^\'\\\n]|(\\(\'|\\|n|t|r)))
 UNCLOSED_MULTI  = #\*([^*]|\*+[^*#])*
 
 %%
